@@ -1,32 +1,34 @@
 require 'conf'
+local resource = require 'resource'
 
 local actor = {}
 
 function actor:animate(target, name)
-  local animation = {
+  local self = {
     name = name,
-    frame = 1,
-    image = nil,
-    update = nil
+    frame = 1
   }
 
-  setmetatable(animation, { __index = config.animations[name] })
+  setmetatable(self, { __index = config.animations[name] })
 
-  animation.update = function()
+  self.image = resource.image[self.name]
+  self.quad = love.graphics.newQuad(0, 0, self.width, self.height, self.image:getDimensions())
+
+  self.update = function()
     while true do
-      animation.frame = animation.frame + 1
+      self.frame = self.frame + 1
 
-      if animation.frame > animation.length then
-        animation.frame = 1
+      if self.frame > self.length then
+        self.frame = 1
       end
 
-      animation.image = animation.name .. animation.frame
+      self.quad:setViewport((self.frame - 1) * self.width, 0, self.width, self.height)
 
-      coroutine.yield(animation.delays and animation.delays[animation.frame] or animation.delay)
-     end
+      coroutine.yield(self.delays and self.delays[self.frame] or self.delay)
+    end
   end
 
-  return animation
+  return self
 end
 
 return actor

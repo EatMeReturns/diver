@@ -1,10 +1,19 @@
 function love.conf(t)
-  t.window.width = 160
-  t.window.height = 144
+  t.window = nil
 end
 
 -- Global configuration
 config = {}
+
+-- The config automatically refreshes when this file is saved.
+config.update = function()
+  local mtime = love.filesystem.getLastModified('config.lua')
+  if not config.lastModified or mtime > config.lastModified then
+    package.loaded.conf = nil
+    require 'conf'
+    config.lastModified = mtime
+  end
+end
 
 -- The input mapping. Maps virtual controls to keys that trigger the control.
 config.input = {
@@ -16,17 +25,20 @@ config.input = {
   b = { 'x' }
 }
 
--- List of animations. Each animation needs a length in frames and either a
--- global delay or a 'delays' table that specifies the delay for each frame.
--- Images should be named `images/<name><frame>.png`.
+-- List of animations. Each animation needs to specify the width and height of
+-- each frame, as well as the number of frames (length). There should also be a
+-- global delay specified (delay) or a table that specifies the delay for each
+-- frame (delays). The spritesheet should have the same name as the key.
 config.animations = {
   player = {
+    width = 30,
+    height = 30,
     length = 3,
     delay = .25
   }
 }
 
 config.player = {
-  swimSpeed = 4,
-  sinkRate = 1
+  swimSpeed = 8,
+  sinkRate = .5
 }
