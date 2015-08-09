@@ -34,7 +34,7 @@ function player:load()
       self.swim.dir.y = self.dir.y
 
       self.animation.delay = config.animations.player.delay / 3
-      quilt:reset(self.animation.delay)
+      quilt:reset(self.threads.animate)
 
       quilt:remove(self.threads.sink)
 
@@ -56,7 +56,7 @@ function player:load()
     sink = function()
 
       self.animation.delay = config.animations.player.delay
-      quilt:reset(self.animation.delay)
+      quilt:reset(self.threads.animate)
 
       -- Wait for a little bit.
       coroutine.yield(config.player.sinkRate / 2)
