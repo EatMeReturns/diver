@@ -6,19 +6,25 @@ function quilt:load()
 end
 
 function quilt:add(thread)
-  thread = coroutine.wrap(thread)
-  self.threads[thread] = thread
+  self.threads[thread] = coroutine.create(thread)
   self.delays[thread] = 0
+  return thread
 end
 
 function quilt:remove(thread)
   self.threads[thread] = nil
+  return thread
 end
 
 function quilt:update(dt)
-  for thread in pairs(self.threads) do
+  for thread, cr in pairs(self.threads) do
     if self.delays[thread] <= dt then
-      self.delays[thread] = thread() or 0
+      local _, delay = coroutine.resume(cr)
+      self.delays[thread] = delay or 0
+
+      if coroutine.status(cr) == 'dead' then
+        self:remove(thread)
+      end
     else
       self.delays[thread] = self.delays[thread] - dt
     end
