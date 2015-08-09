@@ -2,7 +2,7 @@ local g = love.graphics
 local resource = require 'resource'
 
 local graphics = {}
-graphics.scale = 1
+graphics.scale = 4
 
 function graphics:load()
   self:refreshWindow()

@@ -24,7 +24,7 @@ function actor:animate(target, name)
 
       self.quad:setViewport((self.frame - 1) * self.width, 0, self.width, self.height)
 
-      coroutine.yield(self.delays and self.delays[self.frame] or self.delay)
+      coroutine.yield(self.delays and self.delays[self.frame] or (type(self.delay) == 'function' and self.delay() or self.delay))
     end
   end
 

@@ -16,6 +16,11 @@ function quilt:remove(thread)
   return thread
 end
 
+function quilt:reset(thread)
+  self.delays[thread] = 0
+  return thread
+end
+
 function quilt:update(dt)
   for thread, cr in pairs(self.threads) do
     if self.delays[thread] <= dt then
