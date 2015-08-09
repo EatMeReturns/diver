@@ -32,8 +32,8 @@ config.input = {
 config.animations = {
   player = {
     width = 30,
-    height = 30,
-    length = 3
+    height = 24,
+    length = 4
   }
 }
 
