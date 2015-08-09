@@ -33,7 +33,7 @@ function player:load()
       self.swim.dir.x = self.dir.x
       self.swim.dir.y = self.dir.y
 
-      self.animation.delay = config.animations.player.delay / 3
+      self.animation.delay = config.player.swimAnimationDelay
       quilt:reset(self.threads.animate)
 
       quilt:remove(self.threads.sink)
@@ -55,7 +55,7 @@ function player:load()
     -- Sinks forever until something stops it
     sink = function()
 
-      self.animation.delay = config.animations.player.delay
+      self.animation.delay = config.player.sinkAnimationDelay
       quilt:reset(self.threads.animate)
 
       -- Wait for a little bit.

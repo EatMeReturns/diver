@@ -33,12 +33,13 @@ config.animations = {
   player = {
     width = 30,
     height = 30,
-    length = 3,
-    delay = .25
+    length = 3
   }
 }
 
 config.player = {
   swimSpeed = 8,
-  sinkRate = .5
+  sinkRate = .5,
+  sinkAnimationDelay = .75,
+  swimAnimationDelay = .12
 }
