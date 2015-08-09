@@ -15,3 +15,9 @@ config.input = {
   b = { 'x' }
 }
 
+config.animations = {
+  player = {
+    length = 3,
+    delay = .25
+  }
+}
