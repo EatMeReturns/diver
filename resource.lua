@@ -4,6 +4,7 @@ resource.image = setmetatable({}, {
   __index = function(_, name)
     local image = love.graphics.newImage('images/' .. name .. '.png')
     resource.image[name] = image
+    image:setFilter('nearest', 'nearest')
     return image
   end
 })

@@ -6,7 +6,6 @@ graphics.scale = 1
 
 function graphics:load()
   self:refreshWindow()
-  g.setDefaultFilter('nearest', 'nearest')
 end
 
 function graphics:drawImage(name, x, y)
