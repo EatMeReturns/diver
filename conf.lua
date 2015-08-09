@@ -6,3 +6,12 @@ end
 -- Global configuration
 config = {}
 
+config.input = {
+  up = { 'up', 'w' },
+  down = { 'down', 's' },
+  left = { 'left', 'a' },
+  right = { 'right', 'd' },
+  a = { 'z' },
+  b = { 'x' }
+}
+
