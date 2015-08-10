@@ -92,7 +92,7 @@ function player:load()
         self.flip = self.dir.x == 0 and self.flip or self.dir.x < 0
         self.rotation = (self.dir.x == 0 and self.dir.y == 0) and self.rotation or math.atan2(self.dir.y, self.dir.x)
 
-        if input.a.justPressed and self.swim.mag == 0 then
+        if input.a.justPressed and self.swim.mag == 0 and (self.dir.x ~= 0 or self.dir.y ~= 0) then
           quilt:add(self.threads.swim)
         end
 
