@@ -42,7 +42,7 @@ function player:load()
 
       while self.swim.mag > 0 do
         print('swimming...')
-        self:move(self.swim.dir)
+        self:move(self.swim.dir.x * 1, self.swim.dir.y * 1)
 
         if self.swim.mag > 1 then
           coroutine.yield(1 / self.swim.mag / 4)

@@ -34,9 +34,10 @@ function graphics:refreshWindow()
   love.window.setMode(160 * self.scale, 144 * self.scale)
 end
 
-function graphics:push()
+function graphics:push(x, y)
   g.push()
   g.scale(self.scale)
+  g.translate(-x, -y)
 end
 
 function graphics:pop()

@@ -22,8 +22,8 @@ function love.update(dt)
 end
 
 function love.draw()
-  graphics:push()
-  ocean:draw()
+  graphics:push(player.pos.x - 80, player.pos.y - 72)
+  ocean:draw(player.pos.x - 80, player.pos.y - 72, player.pos.x + 80, player.pos.y + 72)
   player:draw()
   graphics:pop()
 end

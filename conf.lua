@@ -37,7 +37,7 @@ config.animations = {
 }
 
 config.player = {
-  swimSpeed = 8, --burst
+  swimSpeed = 16, --burst
   sinkRate = .5
 }
 
