@@ -14,6 +14,7 @@ function graphics:drawImage(name, x, y)
 end
 
 function graphics:drawAnimation(animation, x, y)
+  animation.quad:setViewport((animation.frame - 1) * animation.width, 0, animation.width, animation.height)
   g.draw(animation.image, animation.quad, x, y)
 end
 

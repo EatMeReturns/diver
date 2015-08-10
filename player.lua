@@ -33,9 +33,7 @@ function player:load()
       self.swim.dir.x = self.dir.x
       self.swim.dir.y = self.dir.y
 
-      self.animation.delay = config.player.swimAnimationDelay
       quilt:reset(self.threads.animate)
-
       quilt:remove(self.threads.sink)
 
       while self.swim.mag > 0 do
@@ -55,7 +53,6 @@ function player:load()
     -- Sinks forever until something stops it
     sink = function()
 
-      self.animation.delay = config.player.sinkAnimationDelay
       quilt:reset(self.threads.animate)
 
       -- Wait for a little bit.
@@ -69,7 +66,17 @@ function player:load()
     end,
 
     -- Handles updating and looping of the animation
-    animate = self.animation.update,
+    animate = function()
+      while true do
+        self.animation.frame = self.animation.frame + 1
+
+        if self.animation.frame > self.animation.length then
+          self.animation.frame = 1
+        end
+
+        coroutine.yield(self.swim.mag == 0 and .75 or .12)
+      end
+    end,
 
     -- Responds to input
     update = function()

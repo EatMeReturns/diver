@@ -26,9 +26,8 @@ config.input = {
 }
 
 -- List of animations. Each animation needs to specify the width and height of
--- each frame, as well as the number of frames (length). There should also be a
--- global delay specified (delay) or a table that specifies the delay for each
--- frame (delays). The spritesheet should have the same name as the key.
+-- each frame, as well as the number of frames (length). The spritesheet should
+-- have the same name as the key.
 config.animations = {
   player = {
     width = 30,
