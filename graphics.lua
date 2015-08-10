@@ -10,11 +10,13 @@ end
 
 function graphics:drawImage(name, x, y, ...)
   local image = resource.image[name]
+  g.setColor(255, 255, 255)
   g.draw(image, x, y)
 end
 
 function graphics:drawAnimation(animation, ...)
   animation.quad:setViewport((animation.frame - 1) * animation.width, 0, animation.width, animation.height)
+  g.setColor(255, 255, 255)
   g.draw(animation.image, animation.quad, ...)
 end
 

@@ -2,13 +2,17 @@ local input = require 'input'
 local graphics = require 'graphics'
 local quilt = require 'quilt'
 
+local ocean = require 'ocean'
 local player = require 'player'
 
 function love.load()
   input:load()
   quilt:load()
   player:load()
+  ocean:load()
   graphics:load()
+
+  require 'generator' ()
 end
 
 function love.update(dt)
@@ -19,6 +23,7 @@ end
 
 function love.draw()
   graphics:push()
+  ocean:draw()
   player:draw()
   graphics:pop()
 end
