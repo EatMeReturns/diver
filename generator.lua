@@ -3,10 +3,6 @@ local r = love.math.random
 local rn = love.math.randomNormal
 local function maybe(...) local a = {...} return a[r(1, #a)] end
 
-local function distance(x1, y1, x2, y2)
-  return (x1 - x2) ^ 2 + (y1 - y2) ^ 2
-end
-
 local function set(x, y, v)
   v = v or 1
   ocean.walls[x] = ocean.walls[x] or {}
