@@ -38,9 +38,7 @@ config.animations = {
 
 config.player = {
   swimSpeed = 8, --burst
-  sinkRate = .5,
-  sinkAnimationDelay = .75,
-  swimAnimationDelay = .12
+  sinkRate = .5
 }
 
 config.shark = {

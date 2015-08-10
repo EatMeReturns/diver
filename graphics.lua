@@ -8,14 +8,14 @@ function graphics:load()
   self:refreshWindow()
 end
 
-function graphics:drawImage(name, x, y)
+function graphics:drawImage(name, x, y, ...)
   local image = resource.image[name]
   g.draw(image, x, y)
 end
 
-function graphics:drawAnimation(animation, x, y)
+function graphics:drawAnimation(animation, ...)
   animation.quad:setViewport((animation.frame - 1) * animation.width, 0, animation.width, animation.height)
-  g.draw(animation.image, animation.quad, x, y)
+  g.draw(animation.image, animation.quad, ...)
 end
 
 function graphics:upscale()

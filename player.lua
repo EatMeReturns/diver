@@ -9,10 +9,14 @@ local player = {}
 function player:load()
 
   -- Position
-  self.pos = { x = 0, y = 0 }
+  self.pos = { x = 80, y = 72 }
 
   -- Map directional inputs to a vectorish thing
   self.dir = { x = 0, y = 0 }
+
+  -- For persistent rendering independent of keystate
+  self.flip = false
+  self.rotation = 0
 
   -- Swimming has a fixed direction that is set when you kick and a magnitude
   -- that decays over its duration. If the magnitude is zero then you stop
@@ -33,7 +37,7 @@ function player:load()
       self.swim.dir.x = self.dir.x
       self.swim.dir.y = self.dir.y
 
-      quilt:reset(self.threads.animate)
+      --quilt:reset(self.threads.animate)
       quilt:remove(self.threads.sink)
 
       while self.swim.mag > 0 do
@@ -53,7 +57,7 @@ function player:load()
     -- Sinks forever until something stops it
     sink = function()
 
-      quilt:reset(self.threads.animate)
+      --quilt:reset(self.threads.animate)
 
       -- Wait for a little bit.
       coroutine.yield(config.player.sinkRate / 2)
@@ -84,6 +88,10 @@ function player:load()
         self.dir.x = input.left.pressed and -1 or (input.right.pressed and 1 or 0)
         self.dir.y = input.up.pressed and -1 or (input.down.pressed and 1 or 0)
 
+        self.animation.image = (self.dir.x == 0 and self.dir.y == 0) and self.animation.image or ((self.dir.x ~= 0 and self.dir.y ~= 0) and resource.image.player45 or resource.image.player)
+        self.flip = self.dir.x == 0 and self.flip or self.dir.x < 0
+        self.rotation = (self.dir.x == 0 and self.dir.y == 0) and self.rotation or math.atan2(self.dir.y, self.dir.x)
+
         if input.a.justPressed and self.swim.mag == 0 then
           quilt:add(self.threads.swim)
         end
@@ -103,7 +111,13 @@ function player:load()
 end
 
 function player:draw()
-  graphics:drawAnimation(self.animation, self.pos.x, self.pos.y)
+  local sx, sy = self.flip and -1 or 1, 1
+  local r = sx == -1 and self.rotation - math.pi or self.rotation
+  if self.animation.image == resource.image.player45 then
+    r = (self.dir.y < 0) and math.pi / 2 * -sx or 0
+  end
+  local ox, oy = self.animation.width / 2, self.animation.height / 2
+  graphics:drawAnimation(self.animation, self.pos.x, self.pos.y, r, sx, sy, ox, oy)
 end
 
 function player:move(x, y)
