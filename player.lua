@@ -37,7 +37,7 @@ function player:load()
       self.swim.dir.x = self.dir.x
       self.swim.dir.y = self.dir.y
 
-      --quilt:reset(self.threads.animate)
+      quilt:reset(self.threads.animate)
       quilt:remove(self.threads.sink)
 
       while self.swim.mag > 0 do
@@ -57,7 +57,7 @@ function player:load()
     -- Sinks forever until something stops it
     sink = function()
 
-      --quilt:reset(self.threads.animate)
+      quilt:reset(self.threads.animate)
 
       -- Wait for a little bit.
       coroutine.yield(config.player.sinkRate / 2)
