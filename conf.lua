@@ -38,8 +38,29 @@ config.animations = {
 }
 
 config.player = {
-  swimSpeed = 8,
+  swimSpeed = 8, --burst
   sinkRate = .5,
   sinkAnimationDelay = .75,
   swimAnimationDelay = .12
+}
+
+config.shark = {
+  swimSpeed = 8, --constant
+  swimAnimationDelay = .25
+}
+
+config.jellyfish = {
+  swimSpeed = 4, --burst
+  swimAnimationDelay = {.25, .25, .25}
+}
+
+config.squid = {
+  swimSpeed = 16, --burst
+  sinkAnimationDelay = .75,
+  swimAnimationDelay = .12
+}
+
+config.smallFish = {
+  swimSpeed = 10, --constant
+  swimAnimationDelay = .25
 }
