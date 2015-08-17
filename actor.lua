@@ -1,4 +1,5 @@
 require 'conf'
+
 local resource = require 'resource'
 
 local actor = {}

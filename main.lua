@@ -1,14 +1,21 @@
+require 'class'
+require 'util'
+require 'controller'
 local input = require 'input'
 local graphics = require 'graphics'
 local quilt = require 'quilt'
 
 local ocean = require 'ocean'
 local player = require 'player'
+particles = nil
+projectiles = nil
 
 function love.load()
   input:load()
   quilt:load()
-  player:load()
+  particles = controller(true)
+  projectiles = controller(true)
+  player:load(particles)
   ocean:load()
   graphics:load()
 
@@ -24,6 +31,8 @@ end
 function love.draw()
   graphics:push(player.pos.x - 80, player.pos.y - 72)
   ocean:draw(player.pos.x - 80, player.pos.y - 72, player.pos.x + 80, player.pos.y + 72)
+  particles:draw()
+  projectiles:draw()
   player:draw()
   graphics:pop()
 end

@@ -1,5 +1,6 @@
 function love.conf(t)
   t.window = nil
+  t.console = true
 end
 
 -- Global configuration
@@ -33,31 +34,54 @@ config.animations = {
     width = 30,
     height = 24,
     length = 4
+  },
+
+  bubbles = {
+    width = 8,
+    height = 8,
+    length = 3
+  },
+
+  spear = {
+    width = 12,
+    height = 12,
+    length = 9
   }
 }
 
 config.player = {
   swimSpeed = 16, --burst
-  sinkRate = .5
+  sinkRate = .5,
+  health = 100
 }
 
 config.shark = {
   swimSpeed = 8, --constant
-  swimAnimationDelay = .25
+  swimAnimationDelay = .25,
+  health = 45
 }
 
 config.jellyfish = {
   swimSpeed = 4, --burst
-  swimAnimationDelay = {.25, .25, .25}
+  swimAnimationDelay = {.25, .25, .25},
+  health = 15
 }
 
 config.squid = {
   swimSpeed = 16, --burst
   sinkAnimationDelay = .75,
-  swimAnimationDelay = .12
+  swimAnimationDelay = .12,
+  health = 75
 }
 
 config.smallFish = {
   swimSpeed = 10, --constant
-  swimAnimationDelay = .25
+  swimAnimationDelay = .25,
+  health = 5
+}
+
+config.spear = {
+  swimSpeed = 8,
+  damage = 10,
+  framePositions = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}
 }
