@@ -21,7 +21,8 @@ function spear:init(pos, dir)
 		update = function()
 			while true do
 				self:move(self.dir.x * config.spear.swimSpeed, self.dir.y * config.spear.swimSpeed)
-				
+				particles:add(bubbler(self, {x = self.dir.x * -1, y = self.dir.y * -1}, .5, .1, {x = self.dir.x * -5, y = self.dir.y * -5}))
+
 				if false then--if offscreen then
 					self:die()
 				end

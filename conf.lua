@@ -23,7 +23,8 @@ config.input = {
   left = { 'left', 'a' },
   right = { 'right', 'd' },
   a = { 'z' },
-  b = { 'x' }
+  b = { 'x' },
+  start = { 'space' }
 }
 
 -- List of animations. Each animation needs to specify the width and height of
@@ -46,38 +47,56 @@ config.animations = {
     width = 12,
     height = 12,
     length = 9
+  },
+
+  shark = {
+    width = 44,
+    height = 12,
+    length = 4
   }
 }
 
 config.player = {
   swimSpeed = 16, --burst
   sinkRate = .5,
-  health = 100
+  health = 100,
+  collision = {
+    w = 18,
+    h = 18
+  }
 }
 
 config.shark = {
   swimSpeed = 8, --constant
   swimAnimationDelay = .25,
-  health = 45
+  health = 45,
+  damage = 20,
+  collision = {
+    w = 40,
+    h = 8
+  }
 }
 
 config.jellyfish = {
   swimSpeed = 4, --burst
   swimAnimationDelay = {.25, .25, .25},
-  health = 15
+  health = 15,
+  damage = 15
 }
 
 config.squid = {
   swimSpeed = 16, --burst
   sinkAnimationDelay = .75,
   swimAnimationDelay = .12,
-  health = 75
+  health = 75,
+  damage = 30
 }
 
 config.smallFish = {
   swimSpeed = 10, --constant
   swimAnimationDelay = .25,
-  health = 5
+  health = 5,
+  damage = 0
 }
 
 config.spear = {

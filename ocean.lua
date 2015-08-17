@@ -1,3 +1,5 @@
+local graphics = require 'graphics'
+
 local ocean = {}
 
 local function getCell(thing)
@@ -11,12 +13,12 @@ end
 
 function ocean:draw(x1, y1, x2, y2)
   local g = love.graphics
-  g.setColor(0, 0, 255)
+  g.setColor(75, 106, 137, 255)
 
   for x = x1, x2 do
     for y = y1, y2 do
       if self.walls[x] and self.walls[x][y] == 0 then
-        g.point(x, y)
+        love.graphics.rectangle('fill', x - graphics.scale / 2, y - graphics.scale / 2, graphics.scale, graphics.scale)
       end
     end
   end

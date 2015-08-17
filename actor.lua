@@ -7,7 +7,8 @@ local actor = {}
 function actor:animate(target, name)
   local self = {
     name = name,
-    frame = 1
+    frame = 1,
+    visible = true
   }
 
   setmetatable(self, { __index = config.animations[name] })

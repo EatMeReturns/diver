@@ -2,6 +2,7 @@ local ocean = require 'ocean'
 local r = love.math.random
 local rn = love.math.randomNormal
 local function maybe(...) local a = {...} return a[r(1, #a)] end
+--maybe: random item in list of arguments?
 
 local function set(x, y, v)
   v = v or 1

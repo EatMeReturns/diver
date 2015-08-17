@@ -10,10 +10,11 @@ resource.image = setmetatable({}, {
 })
 
 resource.font = setmetatable({}, {
-  __call = function(name, size)
+  __call = function(_, name, size)
     if not resource.font[name] or not resource.font[name][size] then
       resource.font[name] = resource.font[name] or {}
       resource.font[name][size] = love.graphics.newFont('fonts/' .. name .. '.ttf', size)
+      resource.font[name][size]:setFilter('nearest', 'nearest', 0)
     end
 
     return resource.font[name][size]

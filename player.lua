@@ -5,6 +5,7 @@ local quilt = require 'quilt'
 local actor = require 'actor'
 require 'spear'
 require 'bubbler'
+require 'collider'
 
 local player = {}
 
@@ -33,26 +34,46 @@ function player:load(particles)
     timer = 0
   }
 
+  self.invulnerable = false
+  self.health = config.player.health
+
   self.animation = actor:animate(self, 'player')
+  self.collide = collider(self, {w = config.player.collision.w, h = config.player.collision.h}, false)
 
   self.threads = {
+
+    -- Flashes the player's sprite if they take damage.
+    hurt = function()
+      self.animation.hurtTimer = 1.25
+      while self.animation.hurtTimer > 0 do
+        self.animation.hurtTimer = self.animation.hurtTimer - .0625
+        self.animation.visible = not self.animation.visible
+
+        if self.animation.hurtTimer <= 0 then
+          self.animation.hurtTimer = 0
+          self.animation.visible = true
+          self.invulnerable = false
+        else
+          coroutine.yield(.0625)
+        end
+      end
+    end,
 
     -- Swims in our current direction for a while, slowing down over time.
     -- After the swimming is complete, start up the sink thread.
     fire = function()
-        print('firing...')
-        projectiles:add(spear({x = self.pos.x, y = self.pos.y}, {x = self.dir.x, y = self.dir.y}))
-        self.speargun.timer = 0.75
+      projectiles:add(spear({x = self.pos.x, y = self.pos.y}, {x = self.dir.x, y = self.dir.y}))
+      self.speargun.timer = 0.67
 
-        while self.speargun.timer > 0 do
-          self.speargun.timer = self.speargun.timer - .0625
+      while self.speargun.timer > 0 do
+        self.speargun.timer = self.speargun.timer - .0625
 
-          if self.speargun.timer < 0 then
-            self.speargun.timer = 0
-          else
-            coroutine.yield(.0625)
-          end
+        if self.speargun.timer < 0 then
+          self.speargun.timer = 0
+        else
+          coroutine.yield(.0625)
         end
+      end
     end,
 
     swim = function()
@@ -136,6 +157,10 @@ function player:load(particles)
           quilt:add(self.threads.fire)
         end
 
+        if not self.invulnerable then
+          quilt:remove(self.threads.hurt)
+        end
+
         coroutine.yield()
       end
     end
@@ -146,14 +171,27 @@ function player:load(particles)
   quilt:add(self.threads.animate)
 end
 
-function player:draw()
-  local sx, sy = self.flip and -1 or 1, 1
-  local r = sx == -1 and self.rotation - math.pi or self.rotation
-  if self.animation.image == resource.image.player45 then
-    r = (self.dir.y < 0) and math.pi / 2 * -sx or 0
+function player:hurt(amount)
+  if amount > 0 and not self.invulnerable then
+    self.invulnerable = true
+    quilt:add(self.threads.hurt)
+    self.health = self.health - amount
+    if self.health <= 0 then
+      --TODO: GAME OVER.
+    end
   end
-  local ox, oy = self.animation.width / 2, self.animation.height / 2
-  graphics:drawAnimation(self.animation, self.pos.x, self.pos.y, r, sx, sy, ox, oy)
+end
+
+function player:draw()
+  if self.animation.visible then
+    local sx, sy = self.flip and -1 or 1, 1
+    local r = sx == -1 and self.rotation - math.pi or self.rotation
+    if self.animation.image == resource.image.player45 then
+      r = (self.dir.y < 0) and math.pi / 2 * -sx or 0
+    end
+    local ox, oy = self.animation.width / 2, self.animation.height / 2
+    graphics:drawAnimation(self.animation, self.pos.x, self.pos.y, r, sx, sy, ox, oy)
+  end
 end
 
 function player:move(x, y)
